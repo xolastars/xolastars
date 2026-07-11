@@ -1,0 +1,2642 @@
+﻿<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#08111f">
+    <meta name="color-scheme" content="dark light">
+    <title>XolaStars ✦ Telegram Stars Marketplace</title>
+    <meta name="description" content="Покупка Telegram Stars — лучший способ пополнить баланс">
+    <meta name="keywords" content="Telegram Stars, Stars, Telegram, Premium">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060816;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: .35s;
+        }
+
+        /* ===== THEME VARIABLES ===== */
+        :root {
+            --bg: #060816;
+            --bg2: #0b1223;
+            --card: rgba(255, 255, 255, .06);
+            --cardHover: rgba(255, 255, 255, .10);
+            --border: rgba(255, 255, 255, .08);
+            --text: #ffffff;
+            --muted: #9ca6c2;
+            --primary: #5aa8ff;
+            --secondary: #72f2ff;
+            --gold: #ffd54a;
+            --danger: #ff6d7d;
+            --success: #56ff96;
+            --radius: 22px;
+            --shadow: 0 15px 50px rgba(0, 0, 0, .35);
+        }
+        body[data-theme="light"] {
+            --bg: #f4f7fb;
+            --bg2: #ffffff;
+            --card: #ffffff;
+            --cardHover: #f7f8fc;
+            --border: #dde3ef;
+            --text: #222;
+            --muted: #596273;
+        }
+        body[data-theme="amoled"] {
+            --bg: #000000;
+            --bg2: #050505;
+            --card: #0a0a0a;
+        }
+        body {
+            background: radial-gradient(circle at top, #1d2d64 0%, transparent 35%),
+                radial-gradient(circle at bottom, #003c63 0%, transparent 35%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            width: min(1320px, 92%);
+            margin: auto;
+        }
+
+        /* ===== CANVAS ===== */
+        canvas#space {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+        }
+
+        /* ===== CURSOR GLOW ===== */
+        #cursorGlow {
+            position: fixed;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(90, 168, 255, .16), transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            will-change: transform;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(18px);
+            background: rgba(8, 12, 24, .45);
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            z-index: 999;
+            transition: transform .35s ease;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-size: 30px;
+            font-weight: 800;
+            color: #fff;
+        }
+        .logo span {
+            color: var(--gold);
+            font-size: 34px;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            display: flex;
+            gap: 34px;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 600;
+            transition: .3s;
+        }
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* ===== ACTIONS ===== */
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .icon {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background: var(--card);
+            color: #fff;
+            backdrop-filter: blur(15px);
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .icon:hover {
+            transform: translateY(-3px);
+            background: var(--cardHover);
+        }
+        .primary {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 15px 35px rgba(90, 168, 255, .3);
+            transition: .3s;
+            font-size: 16px;
+        }
+        .primary:hover {
+            transform: translateY(-3px);
+        }
+        .secondary {
+            padding: 15px 30px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            cursor: pointer;
+            color: var(--text);
+            transition: .3s;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .secondary:hover {
+            background: var(--cardHover);
+        }
+
+        /* ===== MAIN ===== */
+        main {
+            padding-top: 120px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 80px 0 120px;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .badge {
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 28px;
+        }
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 50px;
+        }
+        .stat {
+            padding: 25px;
+            border-radius: var(--radius);
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+        .stat h2 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+        .stat p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ===== BUY CARD ===== */
+        .buy-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+        .buy-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4cff7f;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 12px #4cff7f;
+        }
+        .field {
+            margin-top: 24px;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .field input[type="text"],
+        .field input[type="search"] {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            transition: .3s;
+        }
+        .field input[type="text"]:focus,
+        .field input[type="search"]:focus {
+            border-color: var(--primary);
+        }
+        .range-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-weight: 700;
+        }
+        .buyButton {
+            width: 100%;
+            margin-top: 30px;
+        }
+        .features-mini {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+        /* дополнительный стиль для поля ввода чисел */
+        .stars-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .stars-input-wrapper input[type="number"] {
+            width: 100px;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.05);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+        }
+        .stars-input-wrapper input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+        .stars-input-wrapper span {
+            color: var(--muted);
+        }
+
+        /* ===== PACKAGES ===== */
+        .packages {
+            padding: 120px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title span {
+            display: inline-block;
+            padding: 8px 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+        .section-title h2 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .section-title p {
+            color: var(--muted);
+            max-width: 700px;
+            margin: auto;
+        }
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .package {
+            position: relative;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            transition: .35s;
+        }
+        .package:hover {
+            transform: translateY(-10px);
+        }
+        .popular {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(90deg, #ffbf3f, #ffd95f);
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .package-price {
+            font-size: 40px;
+            font-weight: 800;
+            margin: 18px 0;
+        }
+        .package ul {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        .package li {
+            margin: 10px 0;
+            color: var(--muted);
+        }
+
+        /* ===== ADVANTAGES ===== */
+        .advantages {
+            padding: 120px 0;
+        }
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .advantage {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 24px;
+            transition: .3s;
+        }
+        .advantage:hover {
+            transform: translateY(-8px);
+        }
+        .adv-icon {
+            font-size: 42px;
+            margin-bottom: 18px;
+        }
+        .advantage h3 {
+            margin-bottom: 12px;
+        }
+        .advantage p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 120px 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .counter-card {
+            padding: 35px;
+            border-radius: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: .3s;
+        }
+        .counter-card:hover {
+            transform: translateY(-8px);
+        }
+        .counter {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        .counter-card p {
+            color: var(--muted);
+        }
+
+        /* ===== PROMO ===== */
+        .promo {
+            padding: 40px 0 120px;
+        }
+        .promo-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #1f3d7a, #0d1832);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+        .timer {
+            display: flex;
+            gap: 20px;
+        }
+        .timer div {
+            width: 90px;
+            padding: 16px;
+            text-align: center;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .08);
+        }
+        .timer span {
+            display: block;
+            font-size: 34px;
+            font-weight: 800;
+        }
+        .timer small {
+            opacity: .8;
+        }
+
+        /* ===== REVIEWS ===== */
+        .reviews {
+            padding: 120px 0;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .review-card {
+            padding: 30px;
+            border-radius: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: .3s;
+        }
+        .review-card:hover {
+            transform: translateY(-8px);
+        }
+        .review-stars {
+            color: var(--gold);
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+        .review-card p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--muted);
+        }
+        .review-card .review-meta {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        /* ===== FAQ ===== */
+        .faq {
+            padding: 120px 0;
+        }
+        .faq-list {
+            display: grid;
+            gap: 18px;
+        }
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            padding: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .faq-answer {
+            display: none;
+            padding: 0 22px 22px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 80px 0 40px;
+            background: rgba(0, 0, 0, .25);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-grid a {
+            display: block;
+            margin: 10px 0;
+            color: var(--muted);
+            text-decoration: none;
+            transition: .3s;
+        }
+        .footer-grid a:hover {
+            color: #fff;
+        }
+        .copyright {
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, .65);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            width: min(500px, 92%);
+            background: var(--bg2);
+            padding: 35px;
+            border-radius: 24px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            border: none;
+            background: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text);
+        }
+        .modal-content .tinkoff-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .modal-content .tinkoff-logo img {
+            height: 40px;
+            width: auto;
+        }
+        .modal-content .card-details {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .modal-content .card-details p {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        .modal-content .card-details .card-number {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+        .modal-content .card-details .card-holder {
+            font-size: 18px;
+            color: var(--muted);
+        }
+        .modal-content .payment-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .modal-content .payment-buttons .primary {
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* ===== REVIEW MODAL ===== */
+        .review-stars-select {
+            display: flex;
+            gap: 8px;
+            font-size: 32px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .review-stars-select span {
+            transition: .2s;
+            color: var(--muted);
+        }
+        .review-stars-select span.active {
+            color: var(--gold);
+        }
+        .review-textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.05);
+            color: var(--text);
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            outline: none;
+            margin-top: 10px;
+        }
+        .review-textarea:focus {
+            border-color: var(--primary);
+        }
+
+        /* ===== SETTINGS PANEL ===== */
+        .settings {
+            position: fixed;
+            top: 0;
+            right: -340px;
+            width: 320px;
+            height: 100%;
+            padding: 30px;
+            background: var(--bg2);
+            border-left: 1px solid var(--border);
+            transition: .35s;
+            z-index: 1999;
+            overflow-y: auto;
+        }
+        .settings.active {
+            right: 0;
+        }
+        .setting {
+            margin: 25px 0;
+        }
+        .setting label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .setting select,
+        .setting input[type="range"] {
+            width: 100%;
+        }
+
+        /* ===== TOAST ===== */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 35px;
+            transform: translateX(-50%);
+            padding: 16px 28px;
+            background: #10192d;
+            border-radius: 999px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 3000;
+            white-space: nowrap;
+            max-width: 92%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 15px;
+        }
+        #toast.show {
+            opacity: 1;
+        }
+
+        /* ===== PROFILE PANEL ===== */
+        .profile-panel {
+            position: fixed;
+            right: 25px;
+            bottom: 95px;
+            width: 260px;
+            padding: 18px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        .profile-panel h3 {
+            margin-bottom: 12px;
+        }
+        .profile-panel p {
+            margin: 8px 0;
+            color: var(--muted);
+        }
+
+        /* ===== COMPACT ===== */
+        .compact .package {
+            padding: 18px;
+        }
+        .compact .advantage {
+            padding: 18px;
+        }
+        .compact p {
+            line-height: 1.45;
+        }
+
+        /* ===== SITE SEARCH ===== */
+        .site-search {
+            width: 170px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            outline: none;
+            transition: .3s;
+            font-size: 14px;
+        }
+        .site-search:focus {
+            width: 240px;
+            border-color: var(--primary);
+        }
+
+        /* ===== KEYFRAMES ===== */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 0 rgba(90, 168, 255, 0);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(90, 168, 255, .45);
+            }
+            100% {
+                box-shadow: 0 0 0 rgba(90, 168, 255, 0);
+            }
+        }
+        .primary {
+            animation: glow 4s infinite;
+        }
+        .package:hover,
+        .advantage:hover,
+        .review-card:hover {
+            animation: float 2.5s ease-in-out infinite;
+        }
+        .secret-theme {
+            filter: hue-rotate(40deg) saturate(1.2);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1000px) {
+            .hero-grid,
+            .package-grid,
+            .advantages-grid,
+            .stats-grid,
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 48px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-panel {
+                display: none;
+            }
+            .site-search {
+                display: none;
+            }
+            .stars-input-wrapper input[type="number"] {
+                width: 80px;
+            }
+        }
+        @media(max-width:600px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .package-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .timer {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .timer div {
+                width: 70px;
+                padding: 12px;
+            }
+            .timer span {
+                font-size: 26px;
+            }
+            .promo-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .buy-card {
+                padding: 20px;
+            }
+            .modal-content {
+                padding: 25px;
+            }
+            .settings {
+                width: 280px;
+                right: -300px;
+            }
+            .header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .actions .icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .primary {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 24px;
+            }
+            .logo span {
+                font-size: 28px;
+            }
+            header {
+                height: 68px;
+            }
+            main {
+                padding-top: 100px;
+            }
+            .section-title h2 {
+                font-size: 32px;
+            }
+            .package-price {
+                font-size: 30px;
+            }
+            .stars-input-wrapper {
+                flex-wrap: wrap;
+            }
+            .stars-input-wrapper input[type="number"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== CANVAS BACKGROUND ===== -->
+    <canvas id="space"></canvas>
+
+    <!-- ===== CURSOR GLOW ===== -->
+    <div id="cursorGlow"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <div class="header">
+                <a href="#" class="logo"><span>✦</span>XolaStars</a>
+                <nav>
+                    <a href="#buy">Купить</a>
+                    <a href="#advantages">Преимущества</a>
+                    <a href="#reviews">Отзывы</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contacts">Контакты</a>
+                </nav>
+                <div class="actions">
+                    <input type="search" class="site-search" placeholder="🔍 Поиск...">
+                    <button class="icon" id="themeBtn" aria-label="Переключить тему">🌓</button>
+                    <button class="icon" id="settingsBtn" aria-label="Настройки">⚙</button>
+                    <button class="primary" id="buyNowBtn">Купить Stars</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <div class="badge">⭐ Premium Marketplace</div>
+                        <h1>Покупай<br><span>Telegram Stars</span><br>мгновенно</h1>
+                        <p>Лучший способ пополнить баланс в Telegram. Быстро, безопасно и доступно. Только лучшие условия для вас.</p>
+                        <div class="hero-buttons">
+                            <button class="primary" id="heroBuyBtn">Купить</button>
+                            <!-- кнопка "Подробнее" удалена -->
+                        </div>
+                        <div class="stats">
+                            <div class="stat"><h2>1500+</h2><p>Довольных клиентов</p></div>
+                            <div class="stat"><h2>4.9 ★</h2><p>Средний рейтинг</p></div>
+                            <div class="stat"><h2>24/7</h2><p>Поддержка</p></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="buy-card">
+                            <div class="buy-header">
+                                <div class="online"><span class="dot"></span> Онлайн</div>
+                                <div class="secure">🔒 Безопасно</div>
+                            </div>
+                            <h2>⭐ Купить Telegram Stars</h2>
+                            <p class="buy-text">Выберите количество Stars и получите лучшие условия на рынке.</p>
+                            <div class="field">
+                                <label>Telegram Username</label>
+                                <input id="username" type="text" placeholder="@username" autocomplete="off">
+                            </div>
+                            <div class="field">
+                                <label>Количество Stars</label>
+                                <input id="stars" type="range" min="50" max="5000" step="50" value="500">
+                                <div class="stars-input-wrapper">
+                                    <input type="number" id="starsInput" min="50" max="5000" step="50" value="500">
+                                    <span>⭐</span>
+                                </div>
+                                <div class="range-info">
+                                    <span id="starsValue">500 ⭐</span>
+                                    <span id="priceValue">625 ₽</span>
+                                </div>
+                            </div>
+                            <button class="primary buyButton" id="openOrderModal">Оформить заказ</button>
+                            <div class="features-mini">
+                                <div>⚡ Мгновенно</div>
+                                <div>🔒 Безопасно</div>
+                                <div>⭐ Гарантия</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PACKAGES ===== -->
+        <section id="buy" class="packages">
+            <div class="container">
+                <div class="section-title">
+                    <span>Выбери пакет</span>
+                    <h2>Лучшие предложения Stars</h2>
+                    <p>Выберите подходящий пакет и получите максимальную выгоду.</p>
+                </div>
+                <div class="package-grid">
+                    <div class="package">
+                        <div class="popular">Популярный</div>
+                        <h3>100 ⭐</h3>
+                        <div class="package-price">125 ₽</div>
+                        <ul>
+                            <li>✔ Быстрое пополнение</li>
+                            <li>✔ Поддержка 24/7</li>
+                            <li>✔ Безопасная покупка</li>
+                        </ul>
+                        <button class="primary package-buy" data-stars="100">Купить</button>
+                    </div>
+                    <div class="package">
+                        <h3>250 ⭐</h3>
+                        <div class="package-price">312 ₽</div>
+                        <ul>
+                            <li>✔ Выгодная цена</li>
+                            <li>✔ Автоматическая выдача</li>
+                            <li>✔ Гарантия</li>
+                        </ul>
+                        <button class="primary package-buy" data-stars="250">Купить</button>
+                    </div>
+                    <div class="package">
+                        <h3>500 ⭐</h3>
+                        <div class="package-price">625 ₽</div>
+                        <ul>
+                            <li>✔ Лучший пакет</li>
+                            <li>✔ Приоритетная обработка</li>
+                            <li>✔ Без комиссии</li>
+                        </ul>
+                        <button class="primary package-buy" data-stars="500">Купить</button>
+                    </div>
+                    <div class="package">
+                        <h3>1000 ⭐</h3>
+                        <div class="package-price">1250 ₽</div>
+                        <ul>
+                            <li>✔ VIP обслуживание</li>
+                            <li>✔ Максимальная скорость</li>
+                            <li>✔ Индивидуальная поддержка</li>
+                        </ul>
+                        <button class="primary package-buy" data-stars="1000">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ADVANTAGES ===== -->
+        <section id="advantages" class="advantages">
+            <div class="container">
+                <div class="section-title">
+                    <span>Почему мы</span>
+                    <h2>Лучший сервис для покупки Telegram Stars</h2>
+                </div>
+                <div class="advantages-grid">
+                    <div class="advantage">
+                        <div class="adv-icon">⚡</div>
+                        <h3>Мгновенная скорость</h3>
+                        <p>Пополнение выполняется за считанные секунды без задержек.</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv-icon">🔒</div>
+                        <h3>Безопасность</h3>
+                        <p>Мы не храним ваши данные и используем только проверенные каналы.</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv-icon">🎯</div>
+                        <h3>Точный курс</h3>
+                        <p>Лучший обменный курс и высокая скорость обработки заказов.</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv-icon">🌙</div>
+                        <h3>Темная тема</h3>
+                        <p>Поддержка светлой, темной и AMOLED-темы для вашего комфорта.</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv-icon">📱</div>
+                        <h3>Все устройства</h3>
+                        <p>Android, iPhone, планшеты и компьютеры — полная совместимость.</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv-icon">⭐</div>
+                        <h3>Честные цены</h3>
+                        <p>Прозрачные условия, скидки и бонусы для постоянных клиентов.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STATS COUNTERS ===== -->
+        <section id="stats" class="stats-section">
+            <div class="container">
+                <div class="section-title">
+                    <span>Статистика</span>
+                    <h2>Нам доверяют тысячи пользователей</h2>
+                    <p>Реальные цифры, которые подтверждают качество нашего сервиса.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="counter-card">
+                        <div class="counter" data-target="25000">0</div>
+                        <p>Успешных заказов</p>
+                    </div>
+                    <div class="counter-card">
+                        <div class="counter" data-target="12000">0</div>
+                        <p>Довольных клиентов</p>
+                    </div>
+                    <div class="counter-card">
+                        <div class="counter" data-target="99">0</div>
+                        <p>% Успешных операций</p>
+                    </div>
+                    <div class="counter-card">
+                        <div class="counter" data-target="24">0</div>
+                        <p>Часов поддержки</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROMO + TIMER ===== -->
+        <section id="promo" class="promo">
+            <div class="container">
+                <div class="promo-card">
+                    <div>
+                        <h2>🔥 Акция!</h2>
+                        <p>При покупке от <strong>1000 Stars</strong> получите дополнительный бонус.</p>
+                    </div>
+                    <div class="timer">
+                        <div><span id="days">00</span><small>Дней</small></div>
+                        <div><span id="hours">00</span><small>Часов</small></div>
+                        <div><span id="minutes">00</span><small>Минут</small></div>
+                        <div><span id="seconds">00</span><small>Секунд</small></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== REVIEWS ===== -->
+        <section id="reviews" class="reviews">
+            <div class="container">
+                <div class="section-title">
+                    <span>Отзывы</span>
+                    <h2>Что говорят наши клиенты</h2>
+                </div>
+                <div class="reviews-grid" id="reviewsContainer">
+                    <!-- отзывы будут загружаться динамически через JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section id="faq" class="faq">
+            <div class="container">
+                <div class="section-title">
+                    <span>FAQ</span>
+                    <h2>Часто задаваемые вопросы</h2>
+                    <p>Ответы на самые популярные вопросы пользователей.</p>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question">Как получить Stars? <span>+</span></button>
+                        <div class="faq-answer">После оплаты Stars поступают на ваш баланс в Telegram в течение нескольких минут.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Нужно ли что-то ещё? <span>+</span></button>
+                        <div class="faq-answer">Нет. Вам не нужно ничего дополнительно — просто укажите ваш Telegram username.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Какие способы оплаты доступны? <span>+</span></button>
+                        <div class="faq-answer">Карты, электронные кошельки и другие популярные способы оплаты.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Что если задержка? <span>+</span></button>
+                        <div class="faq-answer">В редких случаях задержка возможна — поддержка работает круглосуточно.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer id="contacts">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <h3>XolaStars</h3>
+                        <p>Лучший маркетплейс Telegram Stars.</p>
+                    </div>
+                    <div>
+                        <h4>Навигация</h4>
+                        <a href="#buy">Купить</a>
+                        <a href="#advantages">Преимущества</a>
+                        <a href="#reviews">Отзывы</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                    <div>
+                        <h4>Поддержка</h4>
+                        <a href="https://t.me/ashpetys" target="_blank">Telegram</a>
+                        <a href="mailto:xolasup@mail.ru">Email</a>
+                        <a href="#" id="privacyLink">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div class="copyright">© 2026 XolaStars. Все права защищены.</div>
+            </div>
+        </footer>
+
+        <!-- ===== МОДАЛКА ОПЛАТЫ (заказ) ===== -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <button class="close" id="closeOrderModal">✕</button>
+                <div class="tinkoff-logo">
+                    <img src="https://seeklogo.com/images/T/t-bank-logo-1B8C8E1A4B-seeklogo.com.svg" alt="Т-Банк" style="height:40px; width:auto;">
+                    <span>Т-Банк</span>
+                </div>
+                <div class="card-details">
+                    <p class="card-holder">Получатель: <strong>Валерий А</strong></p>
+                    <p class="card-number">2200 7014 1714 4588</p>
+                </div>
+                <p style="margin-bottom: 16px; color: var(--muted);">Оплатите указанную сумму на карту или воспользуйтесь кнопкой ниже:</p>
+                <div class="payment-buttons">
+                    <a href="https://www.tinkoff.ru/rm/r_VSAvFAhZzn.PgIveJdVzJ/OPO0y80276" target="_blank" class="primary" style="text-decoration: none;">Оплатить через Tinkoff</a>
+                    <button class="primary" id="confirmPaymentBtn">✅ Я оплатил</button>
+                </div>
+                <p style="margin-top: 16px; font-size: 14px; color: var(--muted);">После нажатия "Я оплатил" заказ будет автоматически зарегистрирован, и вы получите Stars.</p>
+            </div>
+        </div>
+
+        <!-- ===== МОДАЛКА ОТЗЫВА ===== -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <button class="close" id="closeReviewModal">✕</button>
+                <h2>Оставьте отзыв</h2>
+                <p style="color: var(--muted); margin-bottom: 10px;">Оцените нашу работу:</p>
+                <div class="review-stars-select" id="reviewStarsSelect">
+                    <span data-value="1">★</span>
+                    <span data-value="2">★</span>
+                    <span data-value="3">★</span>
+                    <span data-value="4">★</span>
+                    <span data-value="5">★</span>
+                </div>
+                <textarea class="review-textarea" id="reviewText" placeholder="Ваш комментарий..."></textarea>
+                <button class="primary" id="submitReviewBtn" style="width:100%; margin-top:20px;">Отправить отзыв</button>
+            </div>
+        </div>
+
+        <!-- ===== МОДАЛКА ПОЛИТИКИ ===== -->
+        <div id="privacyModal" class="modal">
+            <div class="modal-content">
+                <button class="close" id="closePrivacyModal">✕</button>
+                <h2>Политика конфиденциальности</h2>
+                <div style="margin: 20px 0; line-height: 1.7; color: var(--muted); max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                    <p><strong>1. Общие положения</strong><br>
+                    Настоящая политика конфиденциальности регулирует порядок обработки и защиты персональных данных пользователей сайта XolaStars.</p>
+                    <p><strong>2. Собираемые данные</strong><br>
+                    Мы собираем только Telegram username, который указывается пользователем при оформлении заказа. Иные данные не запрашиваются и не хранятся.</p>
+                    <p><strong>3. Цели обработки</strong><br>
+                    Данные используются исключительно для идентификации пользователя при начислении Stars и для связи с ним по вопросам заказа.</p>
+                    <p><strong>4. Хранение и защита</strong><br>
+                    Все данные хранятся в зашифрованном виде и не передаются третьим лицам, за исключением случаев, предусмотренных законодательством РФ.</p>
+                    <p><strong>5. Права пользователя</strong><br>
+                    Пользователь вправе запросить удаление своих данных, обратившись по контактам, указанным в разделе "Поддержка".</p>
+                    <p><strong>6. Изменения</strong><br>
+                    Администрация оставляет за собой право вносить изменения в политику с уведомлением пользователей через сайт.</p>
+                    <p><em>Дата последнего обновления: 11.07.2026</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SETTINGS PANEL ===== -->
+        <div id="settingsPanel" class="settings">
+            <h3>Настройки</h3>
+            <div class="setting">
+                <label>Тема</label>
+                <select id="themeSelect">
+                    <option value="dark">Тёмная</option>
+                    <option value="light">Светлая</option>
+                    <option value="amoled">AMOLED</option>
+                </select>
+            </div>
+            <div class="setting">
+                <label>Размер текста</label>
+                <input id="fontSize" type="range" min="14" max="22" value="16">
+            </div>
+            <div class="setting">
+                <label>Анимации</label>
+                <input type="checkbox" id="animations" checked>
+            </div>
+        </div>
+
+        <!-- ===== TOAST ===== -->
+        <div id="toast"></div>
+
+        <!-- ===== PROFILE PANEL ===== -->
+        <div class="profile-panel">
+            <div class="profile-card">
+                <h3>👤 Ваш профиль</h3>
+                <p><strong>Заказов:</strong> <span id="profileOrders">0</span></p>
+                <p><strong>Куплено Stars:</strong> <span id="profileStars">0</span></p>
+                <p><strong>Потрачено:</strong> <span id="profileSpent">0 ₽</span></p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================================================================
+        // XolaStars — основной JavaScript (финальная версия с отзывами)
+        // ================================================================
+
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+            // ============================================================
+            const state = {
+                theme: 'dark',
+                fontSize: 16,
+                animations: true,
+                username: '',
+                starsAmount: 500,
+                priceMultiplier: 1.25,
+                orders: [],
+                profile: { orders: 0, spent: 0, stars: 0 },
+                achievements: [],
+                notifications: [],
+                compact: false,
+                language: 'ru',
+                lastUsername: '',
+                draft: {},
+                dailyReward: 0,
+                lastSection: null,
+                orderLock: false,
+                reviews: [],
+                reviewRating: 0,
+            };
+
+            // ============================================================
+            // ХРАНИЛИЩЕ (LocalStorage)
+            // ============================================================
+            const storage = {
+                save(key, value) {
+                    try {
+                        localStorage.setItem(key, JSON.stringify(value));
+                    } catch (_) { /* ignore */ }
+                },
+                load(key, def) {
+                    try {
+                        const v = localStorage.getItem(key);
+                        return v ? JSON.parse(v) : def;
+                    } catch (_) { return def; }
+                }
+            };
+
+            // ============================================================
+            // DOM-ССЫЛКИ
+            // ============================================================
+            const $ = (sel) => document.querySelector(sel);
+            const $$ = (sel) => document.querySelectorAll(sel);
+
+            const dom = {
+                body: document.body,
+                header: $('header'),
+                themeBtn: $('#themeBtn'),
+                settingsBtn: $('#settingsBtn'),
+                settingsPanel: $('#settingsPanel'),
+                themeSelect: $('#themeSelect'),
+                fontSize: $('#fontSize'),
+                animationsChk: $('#animations'),
+                toast: $('#toast'),
+                orderModal: $('#orderModal'),
+                closeOrderModal: $('#closeOrderModal'),
+                confirmPayment: $('#confirmPaymentBtn'),
+                reviewModal: $('#reviewModal'),
+                closeReviewModal: $('#closeReviewModal'),
+                reviewStarsSelect: $('#reviewStarsSelect'),
+                reviewText: $('#reviewText'),
+                submitReview: $('#submitReviewBtn'),
+                reviewsContainer: $('#reviewsContainer'),
+                username: $('#username'),
+                stars: $('#stars'),
+                starsInput: $('#starsInput'),
+                starsValue: $('#starsValue'),
+                priceValue: $('#priceValue'),
+                buyBtn: $('#openOrderModal'),
+                heroBuyBtn: $('#heroBuyBtn'),
+                buyNowBtn: $('#buyNowBtn'),
+                profileOrders: $('#profileOrders'),
+                profileStars: $('#profileStars'),
+                profileSpent: $('#profileSpent'),
+                canvas: $('#space'),
+                cursorGlow: $('#cursorGlow'),
+                search: $('.site-search'),
+                logo: $('.logo'),
+                topBtn: null,
+                supportBtn: null,
+                compactBtn: null,
+                langBtn: null,
+                progress: null,
+                privacyLink: $('#privacyLink'),
+                privacyModal: $('#privacyModal'),
+                closePrivacyModal: $('#closePrivacyModal'),
+            };
+
+            // ============================================================
+            // ЗАГРУЗКА СОСТОЯНИЯ
+            // ============================================================
+            function loadState() {
+                state.theme = storage.load('theme', 'dark');
+                state.fontSize = storage.load('font', 16);
+                state.animations = storage.load('animations', true);
+                state.orders = storage.load('orders', []);
+                state.profile = storage.load('profile', { orders: 0, spent: 0, stars: 0 });
+                state.achievements = storage.load('achievements', []);
+                state.notifications = storage.load('notifications', []);
+                state.compact = storage.load('compact', false);
+                state.language = storage.load('language', 'ru');
+                state.lastUsername = storage.load('lastUsername', '');
+                state.draft = storage.load('draft', {});
+                state.dailyReward = storage.load('dailyReward', 0);
+                state.lastSection = storage.load('lastSection', null);
+                state.username = state.lastUsername || '';
+                state.reviews = storage.load('reviews', []);
+            }
+
+            function saveState() {
+                storage.save('theme', state.theme);
+                storage.save('font', state.fontSize);
+                storage.save('animations', state.animations);
+                storage.save('orders', state.orders);
+                storage.save('profile', state.profile);
+                storage.save('achievements', state.achievements);
+                storage.save('notifications', state.notifications);
+                storage.save('compact', state.compact);
+                storage.save('language', state.language);
+                storage.save('lastUsername', state.lastUsername);
+                storage.save('draft', state.draft);
+                storage.save('dailyReward', state.dailyReward);
+                storage.save('lastSection', state.lastSection);
+                storage.save('reviews', state.reviews);
+            }
+
+            // ============================================================
+            // TOAST
+            // ============================================================
+            let toastTimer = null;
+
+            function showToast(text) {
+                if (!dom.toast) return;
+                dom.toast.textContent = text;
+                dom.toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    dom.toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // ============================================================
+            // ТЕМА
+            // ============================================================
+            function applyTheme() {
+                dom.body.setAttribute('data-theme', state.theme);
+                if (dom.themeSelect) dom.themeSelect.value = state.theme;
+                saveState();
+            }
+
+            function cycleTheme() {
+                const order = ['dark', 'light', 'amoled'];
+                let idx = order.indexOf(state.theme);
+                idx = (idx + 1) % order.length;
+                state.theme = order[idx];
+                applyTheme();
+                showToast('Тема изменена');
+            }
+
+            // ============================================================
+            // НАСТРОЙКИ
+            // ============================================================
+            function applySettings() {
+                applyTheme();
+                if (dom.fontSize) {
+                    dom.fontSize.value = state.fontSize;
+                    document.documentElement.style.fontSize = state.fontSize + 'px';
+                }
+                if (dom.animationsChk) {
+                    dom.animationsChk.checked = state.animations;
+                    dom.body.classList.toggle('reduce-motion', !state.animations);
+                }
+                saveState();
+            }
+
+            // ============================================================
+            // КАЛЬКУЛЯТОР STARS
+            // ============================================================
+            function updatePrice() {
+                let amount = Number(dom.stars ? dom.stars.value : 500);
+                if (isNaN(amount) || amount < 50) amount = 50;
+                if (amount > 5000) amount = 5000;
+                state.starsAmount = amount;
+
+                if (dom.stars) dom.stars.value = amount;
+                if (dom.starsInput) dom.starsInput.value = amount;
+                if (dom.starsValue) dom.starsValue.textContent = amount + ' ⭐';
+                if (dom.priceValue) {
+                    const price = Math.round(amount * state.priceMultiplier);
+                    dom.priceValue.textContent = price + ' ₽';
+                }
+                updateProfileDisplay();
+            }
+
+            // ============================================================
+            // ПРОФИЛЬ
+            // ============================================================
+            function updateProfileDisplay() {
+                if (dom.profileOrders) dom.profileOrders.textContent = state.profile.orders;
+                if (dom.profileStars) dom.profileStars.textContent = state.profile.stars.toLocaleString('ru-RU');
+                if (dom.profileSpent) dom.profileSpent.textContent = state.profile.spent.toLocaleString('ru-RU') + ' ₽';
+            }
+
+            // ============================================================
+            // МОДАЛЬНОЕ ОКНО ОПЛАТЫ
+            // ============================================================
+            function openOrderModal() {
+                const user = dom.username ? dom.username.value.trim() : '';
+                if (user.length < 3) {
+                    showToast('Введите Username');
+                    if (dom.username) dom.username.focus();
+                    return;
+                }
+                state.lastUsername = user;
+                storage.save('lastUsername', user);
+                if (dom.orderModal) dom.orderModal.classList.add('active');
+            }
+
+            function closeOrderModal() {
+                if (dom.orderModal) dom.orderModal.classList.remove('active');
+            }
+
+            // ============================================================
+            // ОТПРАВКА УВЕДОМЛЕНИЯ В TELEGRAM
+            // ============================================================
+            async function sendOrderNotification(username, stars, price) {
+                const token = '8983307709:AAHdQn9kS3zXqusa3xv5mgC-rIw4-6qMNIU';
+                const chatId = '6608047888';
+                const text = `✅ Новый заказ!\n👤 Username: @${username}\n⭐ Stars: ${stars}\n💰 Сумма: ${price} ₽\n🕒 Время: ${new Date().toLocaleString('ru-RU')}`;
+                try {
+                    const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: chatId, text: text })
+                    });
+                    if (!resp.ok) console.warn('Telegram notification failed');
+                } catch (e) {
+                    console.warn('Telegram notification error:', e);
+                }
+            }
+
+            // ============================================================
+            // ОТЗЫВЫ
+            // ============================================================
+            function renderReviews() {
+                const container = dom.reviewsContainer;
+                if (!container) return;
+                // Если отзывов нет, показываем стандартные (заглушку)
+                if (state.reviews.length === 0) {
+                    container.innerHTML = `
+                        <div class="review-card">
+                            <div class="review-stars">★★★★★</div>
+                            <p>Отличный сервис! Получил Stars сразу после оплаты. Всё прошло быстро и удобно.</p>
+                            <strong>✦ Александр</strong>
+                            <div class="review-meta">12.07.2026 14:30</div>
+                        </div>
+                        <div class="review-card">
+                            <div class="review-stars">★★★★★</div>
+                            <p>Рекомендую! Отличная цена и быстрое пополнение. Буду заказывать ещё.</p>
+                            <strong>✦ Мария</strong>
+                            <div class="review-meta">11.07.2026 09:15</div>
+                        </div>
+                        <div class="review-card">
+                            <div class="review-stars">★★★★★</div>
+                            <p>Лучший сервис, которым я пользовался. Спасибо за отличную работу!</p>
+                            <strong>✦ Дмитрий</strong>
+                            <div class="review-meta">10.07.2026 18:45</div>
+                        </div>
+                    `;
+                    return;
+                }
+                // Сортируем по дате (новые сверху)
+                const sorted = [...state.reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
+                container.innerHTML = sorted.map(r => `
+                    <div class="review-card">
+                        <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                        <p>${r.text}</p>
+                        <strong>✦ ${r.username}</strong>
+                        <div class="review-meta">${r.date}</div>
+                    </div>
+                `).join('');
+            }
+
+            function openReviewModal() {
+                // Сбрасываем форму
+                state.reviewRating = 0;
+                if (dom.reviewStarsSelect) {
+                    dom.reviewStarsSelect.querySelectorAll('span').forEach(el => el.classList.remove('active'));
+                }
+                if (dom.reviewText) dom.reviewText.value = '';
+                if (dom.reviewModal) dom.reviewModal.classList.add('active');
+            }
+
+            function closeReviewModal() {
+                if (dom.reviewModal) dom.reviewModal.classList.remove('active');
+            }
+
+            function submitReview() {
+                const rating = state.reviewRating;
+                const text = dom.reviewText ? dom.reviewText.value.trim() : '';
+                if (rating === 0) {
+                    showToast('Поставьте оценку от 1 до 5 звёзд');
+                    return;
+                }
+                if (text.length < 3) {
+                    showToast('Напишите комментарий (минимум 3 символа)');
+                    return;
+                }
+                const username = dom.username ? dom.username.value.trim() : 'Аноним';
+                const date = new Date().toLocaleString('ru-RU');
+                state.reviews.push({
+                    username: username,
+                    rating: rating,
+                    text: text,
+                    date: date
+                });
+                storage.save('reviews', state.reviews);
+                renderReviews();
+                closeReviewModal();
+                showToast('Спасибо за ваш отзыв!');
+            }
+
+            // ============================================================
+            // ПОДТВЕРЖДЕНИЕ ОПЛАТЫ
+            // ============================================================
+            function confirmPayment() {
+                if (state.orderLock) {
+                    showToast('Подождите, обрабатывается...');
+                    return;
+                }
+                state.orderLock = true;
+
+                const user = dom.username ? dom.username.value.trim() : '';
+                const amount = state.starsAmount;
+                const price = Math.round(amount * state.priceMultiplier);
+
+                // Сохраняем заказ
+                state.orders.unshift({
+                    username: user,
+                    stars: amount,
+                    price: price + ' ₽',
+                    date: new Date().toLocaleString('ru-RU')
+                });
+                storage.save('orders', state.orders);
+
+                // Обновляем профиль
+                state.profile.orders += 1;
+                state.profile.spent += price;
+                state.profile.stars += amount;
+                storage.save('profile', state.profile);
+                updateProfileDisplay();
+
+                // Уведомление
+                addNotification('Заказ успешно оформлен');
+
+                // Достижения
+                checkAchievements();
+
+                // Отправка в Telegram
+                sendOrderNotification(user, amount, price);
+
+                closeOrderModal();
+                showToast('✅ Оплата подтверждена! Stars скоро будут начислены.');
+
+                // Открываем модалку отзыва
+                setTimeout(() => {
+                    openReviewModal();
+                }, 1000);
+
+                setTimeout(() => { state.orderLock = false; }, 3000);
+            }
+
+            // ============================================================
+            // ДОСТИЖЕНИЯ
+            // ============================================================
+            function unlockAchievement(title) {
+                if (state.achievements.includes(title)) return;
+                state.achievements.push(title);
+                storage.save('achievements', state.achievements);
+                showToast('🏆 ' + title);
+            }
+
+            function checkAchievements() {
+                if (state.profile.orders >= 1) unlockAchievement('Первый заказ');
+                if (state.profile.orders >= 10) unlockAchievement('Постоянный клиент');
+                if (state.profile.stars >= 5000) unlockAchievement('Коллекционер Stars');
+            }
+
+            // ============================================================
+            // УВЕДОМЛЕНИЯ
+            // ============================================================
+            function addNotification(text) {
+                state.notifications.unshift({
+                    text: text,
+                    time: new Date().toLocaleTimeString('ru-RU')
+                });
+                if (state.notifications.length > 30) state.notifications.pop();
+                storage.save('notifications', state.notifications);
+            }
+
+            // ============================================================
+            // ИНИЦИАЛИЗАЦИЯ ОТЗЫВОВ (звёзды кликабельны)
+            // ============================================================
+            function initReviewStars() {
+                const stars = dom.reviewStarsSelect;
+                if (!stars) return;
+                stars.querySelectorAll('span').forEach(el => {
+                    el.addEventListener('click', function() {
+                        const val = parseInt(this.dataset.value);
+                        state.reviewRating = val;
+                        stars.querySelectorAll('span').forEach(s => s.classList.remove('active'));
+                        this.classList.add('active');
+                        // подсветить предыдущие
+                        let prev = this.previousElementSibling;
+                        while (prev) {
+                            prev.classList.add('active');
+                            prev = prev.previousElementSibling;
+                        }
+                    });
+                    el.addEventListener('mouseenter', function() {
+                        const val = parseInt(this.dataset.value);
+                        stars.querySelectorAll('span').forEach(s => s.classList.remove('hover'));
+                        let current = this;
+                        while (current) {
+                            current.classList.add('hover');
+                            current = current.previousElementSibling;
+                        }
+                    });
+                    el.addEventListener('mouseleave', function() {
+                        stars.querySelectorAll('span').forEach(s => s.classList.remove('hover'));
+                    });
+                });
+            }
+
+            // ============================================================
+            // FAQ
+            // ============================================================
+            function initFaq() {
+                $$('.faq-question').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const answer = this.nextElementSibling;
+                        const opened = answer.style.display === 'block';
+                        $$('.faq-answer').forEach(a => a.style.display = 'none');
+                        if (!opened) answer.style.display = 'block';
+                    });
+                });
+            }
+
+            // ============================================================
+            // CANVAS
+            // ============================================================
+            function initCanvas() {
+                const canvas = dom.canvas;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                let w, h;
+                let starsArr = [];
+                let meteors = [];
+
+                function resize() {
+                    w = canvas.width = window.innerWidth;
+                    h = canvas.height = window.innerHeight;
+                }
+                resize();
+                window.addEventListener('resize', resize);
+
+                class Star {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * w;
+                        this.y = Math.random() * h;
+                        this.r = Math.random() * 2 + 0.4;
+                        this.speed = Math.random() * 0.3 + 0.05;
+                        this.alpha = Math.random();
+                        this.dir = Math.random() > 0.5 ? 1 : -1;
+                    }
+                    update() {
+                        this.y += this.speed;
+                        this.alpha += 0.004 * this.dir;
+                        if (this.alpha >= 1) this.dir = -1;
+                        if (this.alpha <= 0.2) this.dir = 1;
+                        if (this.y > h) { this.y = -10;
+                            this.x = Math.random() * w; }
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+                        ctx.fill();
+                    }
+                }
+
+                class Meteor {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * w;
+                        this.y = -100;
+                        this.len = 100 + Math.random() * 120;
+                        this.speed = 6 + Math.random() * 5;
+                    }
+                    update() {
+                        this.x -= this.speed;
+                        this.y += this.speed;
+                        if (this.y > h + 200) this.reset();
+                    }
+                    draw() {
+                        const grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
+                        grad.addColorStop(0, 'rgba(255,255,255,.9)');
+                        grad.addColorStop(1, 'rgba(255,255,255,0)');
+                        ctx.strokeStyle = grad;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(this.x, this.y);
+                        ctx.lineTo(this.x + this.len, this.y - this.len);
+                        ctx.stroke();
+                    }
+                }
+
+                for (let i = 0; i < 320; i++) starsArr.push(new Star());
+                for (let i = 0; i < 3; i++) meteors.push(new Meteor());
+
+                let frameId = null;
+
+                function animate() {
+                    ctx.clearRect(0, 0, w, h);
+                    starsArr.forEach(s => { s.update();
+                        s.draw(); });
+                    meteors.forEach(m => { m.update();
+                        m.draw(); });
+                    frameId = requestAnimationFrame(animate);
+                }
+
+                animate();
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            if (!frameId) animate();
+                        } else {
+                            if (frameId) {
+                                cancelAnimationFrame(frameId);
+                                frameId = null;
+                            }
+                        }
+                    });
+                }, { threshold: 0 });
+                observer.observe(canvas);
+
+                return () => {
+                    if (frameId) cancelAnimationFrame(frameId);
+                    observer.disconnect();
+                };
+            }
+
+            // ============================================================
+            // КУРСОР
+            // ============================================================
+            function initCursor() {
+                const glow = dom.cursorGlow;
+                if (!glow) return;
+                document.addEventListener('mousemove', (e) => {
+                    glow.style.left = e.clientX + 'px';
+                    glow.style.top = e.clientY + 'px';
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // СЧЁТЧИКИ
+            // ============================================================
+            function initCounters() {
+                const counters = $$('.counter');
+                if (!counters.length) return;
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const el = entry.target;
+                            const target = Number(el.dataset.target);
+                            let value = 0;
+                            const step = Math.ceil(target / 150);
+                            function update() {
+                                value += step;
+                                if (value >= target) {
+                                    el.textContent = target.toLocaleString('ru-RU');
+                                    observer.unobserve(el);
+                                    return;
+                                }
+                                el.textContent = value.toLocaleString('ru-RU');
+                                requestAnimationFrame(update);
+                            }
+                            update();
+                            observer.unobserve(el);
+                        }
+                    });
+                }, { threshold: .5 });
+                counters.forEach(c => observer.observe(c));
+            }
+
+            // ============================================================
+            // ТАЙМЕР
+            // ============================================================
+            function initTimer() {
+                const endDate = new Date();
+                endDate.setDate(endDate.getDate() + 3);
+                const els = {
+                    days: document.getElementById('days'),
+                    hours: document.getElementById('hours'),
+                    minutes: document.getElementById('minutes'),
+                    seconds: document.getElementById('seconds'),
+                };
+
+                function updateTimer() {
+                    const diff = endDate - new Date();
+                    if (diff <= 0) return;
+                    const d = Math.floor(diff / 86400000);
+                    const h = Math.floor(diff / 3600000) % 24;
+                    const m = Math.floor(diff / 60000) % 60;
+                    const s = Math.floor(diff / 1000) % 60;
+                    if (els.days) els.days.textContent = String(d).padStart(2, '0');
+                    if (els.hours) els.hours.textContent = String(h).padStart(2, '0');
+                    if (els.minutes) els.minutes.textContent = String(m).padStart(2, '0');
+                    if (els.seconds) els.seconds.textContent = String(s).padStart(2, '0');
+                }
+                updateTimer();
+                setInterval(updateTimer, 1000);
+            }
+
+            // ============================================================
+            // REVEAL АНИМАЦИИ
+            // ============================================================
+            function initReveal() {
+                const items = $$('.package, .advantage, .review-card, .counter-card');
+                if (!items.length) return;
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: .15 });
+                items.forEach(item => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(40px)';
+                    item.style.transition = '.7s';
+                    observer.observe(item);
+                });
+            }
+
+            // ============================================================
+            // КНОПКА "НАВЕРХ"
+            // ============================================================
+            function initTopButton() {
+                const btn = document.createElement('button');
+                btn.innerHTML = '⬆';
+                btn.className = 'icon';
+                btn.style.position = 'fixed';
+                btn.style.right = '25px';
+                btn.style.bottom = '25px';
+                btn.style.display = 'none';
+                btn.style.zIndex = '1000';
+                document.body.appendChild(btn);
+                dom.topBtn = btn;
+
+                window.addEventListener('scroll', () => {
+                    btn.style.display = window.scrollY > 500 ? 'flex' : 'none';
+                }, { passive: true });
+
+                btn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // ============================================================
+            // ПОИСК
+            // ============================================================
+            function initSearch() {
+                const input = dom.search;
+                if (!input) return;
+                input.addEventListener('input', function() {
+                    const val = this.value.toLowerCase();
+                    $$('section').forEach(section => {
+                        const text = section.innerText.toLowerCase();
+                        section.style.display = (text.includes(val) || val === '') ? '' : 'none';
+                    });
+                });
+            }
+
+            // ============================================================
+            // ЕЖЕДНЕВНЫЙ БОНУС
+            // ============================================================
+            function initDailyReward() {
+                const last = Number(localStorage.getItem('dailyReward') || 0);
+                const now = Date.now();
+                const day = 86400000;
+                if (now - last > day) {
+                    localStorage.setItem('dailyReward', String(now));
+                    showToast('🎁 Получен бонус — 50 Stars!');
+                }
+            }
+
+            // ============================================================
+            // ПРОМОКОДЫ
+            // ============================================================
+            const promoCodes = {
+                'STAR10': 10,
+                'COSMOS': 15,
+                'VIP25': 25
+            };
+
+            window.applyPromo = function(code) {
+                code = code.toUpperCase();
+                if (!promoCodes[code]) {
+                    showToast('Промокод не найден');
+                    return;
+                }
+                showToast('Скидка ' + promoCodes[code] + '%');
+            };
+
+            // ============================================================
+            // ГОРЯЧИЕ КЛАВИШИ
+            // ============================================================
+            function initKeyboard() {
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && e.key === 'k') {
+                        e.preventDefault();
+                        if (dom.search) dom.search.focus();
+                    }
+                    if (e.key === 'Escape') {
+                        closeOrderModal();
+                        closeReviewModal();
+                        if (dom.settingsPanel) dom.settingsPanel.classList.remove('active');
+                        if (dom.privacyModal) dom.privacyModal.classList.remove('active');
+                    }
+                    if (e.altKey && e.key === '1') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                    if (e.altKey && e.key === '2') {
+                        const el = document.getElementById('buy');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    if (e.altKey && e.key === '3') {
+                        const el = document.getElementById('reviews');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+                        e.preventDefault();
+                        if (dom.search) dom.search.focus();
+                    }
+                });
+            }
+
+            // ============================================================
+            // НАВИГАЦИЯ ПО СЕКЦИЯМ
+            // ============================================================
+            function initNavHighlight() {
+                const links = $$('nav a');
+                const sections = $$('section[id]');
+                if (!links.length || !sections.length) return;
+
+                window.addEventListener('scroll', function() {
+                    let current = '';
+                    sections.forEach(section => {
+                        if (window.scrollY >= section.offsetTop - 180) {
+                            current = section.id;
+                        }
+                    });
+                    links.forEach(link => {
+                        link.style.color = '';
+                        if (link.getAttribute('href') === '#' + current) {
+                            link.style.color = 'var(--secondary)';
+                        }
+                    });
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // ПАРАЛЛАКС HERO
+            // ============================================================
+            function initParallax() {
+                const hero = $('.hero');
+                if (!hero) return;
+                window.addEventListener('scroll', function() {
+                    hero.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // АНИМАЦИЯ КНОПОК (Ripple)
+            // ============================================================
+            function initRipple() {
+                $$('button').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const ripple = document.createElement('span');
+                        ripple.style.cssText = `
+                                position: absolute;
+                                width: ${size}px;
+                                height: ${size}px;
+                                border-radius: 50%;
+                                background: rgba(255,255,255,.35);
+                                pointer-events: none;
+                                left: ${e.clientX - rect.left - size/2}px;
+                                top: ${e.clientY - rect.top - size/2}px;
+                                transform: scale(0);
+                                transition: .6s;
+                            `;
+                        this.style.position = 'relative';
+                        this.style.overflow = 'hidden';
+                        this.appendChild(ripple);
+                        requestAnimationFrame(() => {
+                            ripple.style.transform = 'scale(4)';
+                            ripple.style.opacity = '0';
+                        });
+                        setTimeout(() => ripple.remove(), 700);
+                    });
+                });
+            }
+
+            // ============================================================
+            // ПОДДЕРЖКА
+            // ============================================================
+            function initSupport() {
+                const btn = document.createElement('button');
+                btn.className = 'primary';
+                btn.textContent = '💬 Поддержка';
+                btn.style.position = 'fixed';
+                btn.style.left = '25px';
+                btn.style.bottom = '25px';
+                btn.style.zIndex = '1000';
+                document.body.appendChild(btn);
+                dom.supportBtn = btn;
+                btn.addEventListener('click', () => {
+                    showToast('Поддержка: @ashpetys (Telegram)');
+                });
+            }
+
+            // ============================================================
+            // КОМПАКТНЫЙ РЕЖИМ
+            // ============================================================
+            function initCompact() {
+                const btn = document.createElement('button');
+                btn.className = 'icon';
+                btn.innerHTML = '📐';
+                const actions = $('.actions');
+                if (actions) actions.appendChild(btn);
+                dom.compactBtn = btn;
+
+                if (state.compact) document.body.classList.add('compact');
+
+                btn.addEventListener('click', () => {
+                    document.body.classList.toggle('compact');
+                    state.compact = document.body.classList.contains('compact');
+                    storage.save('compact', state.compact);
+                });
+            }
+
+            // ============================================================
+            // ЯЗЫК
+            // ============================================================
+            function initLanguage() {
+                const btn = document.createElement('button');
+                btn.className = 'icon';
+                btn.textContent = state.language === 'ru' ? 'RU' : 'EN';
+                const actions = $('.actions');
+                if (actions) actions.appendChild(btn);
+                dom.langBtn = btn;
+
+                btn.addEventListener('click', () => {
+                    state.language = state.language === 'ru' ? 'en' : 'ru';
+                    storage.save('language', state.language);
+                    btn.textContent = state.language === 'ru' ? 'RU' : 'EN';
+                    showToast(state.language === 'ru' ? 'Русский язык' : 'English language');
+                });
+            }
+
+            // ============================================================
+            // ПРОГРЕСС-БАР
+            // ============================================================
+            function initProgress() {
+                const bar = document.createElement('div');
+                bar.id = 'progressBar';
+                bar.style.cssText =
+                    'position:fixed;left:0;top:0;height:4px;width:0;z-index:5000;background:linear-gradient(90deg,#4ea8ff,#6fffd2);';
+                document.body.appendChild(bar);
+                dom.progress = bar;
+
+                window.addEventListener('scroll', function() {
+                    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+                    bar.style.width = pct + '%';
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // АВТОСОХРАНЕНИЕ ЧЕРНОВИКА
+            // ============================================================
+            function initDraft() {
+                if (state.draft.username) {
+                    if (dom.username) dom.username.value = state.draft.username;
+                }
+                if (state.draft.stars) {
+                    if (dom.stars) dom.stars.value = state.draft.stars;
+                    if (dom.starsInput) dom.starsInput.value = state.draft.stars;
+                    updatePrice();
+                }
+
+                if (dom.username) {
+                    dom.username.addEventListener('input', function() {
+                        state.draft.username = this.value;
+                        storage.save('draft', state.draft);
+                    });
+                }
+                if (dom.stars) {
+                    dom.stars.addEventListener('input', function() {
+                        state.draft.stars = this.value;
+                        storage.save('draft', state.draft);
+                        updatePrice();
+                    });
+                }
+                if (dom.starsInput) {
+                    dom.starsInput.addEventListener('input', function() {
+                        let val = parseInt(this.value);
+                        if (isNaN(val)) val = 50;
+                        if (val < 50) val = 50;
+                        if (val > 5000) val = 5000;
+                        this.value = val;
+                        state.draft.stars = val;
+                        storage.save('draft', state.draft);
+                        updatePrice();
+                    });
+                }
+            }
+
+            // ============================================================
+            // СКРЫТИЕ HEADER ПРИ СКРОЛЛЕ (для мобильных тоже)
+            // ============================================================
+            function initHeaderHide() {
+                let lastScroll = 0;
+                const header = dom.header;
+                if (!header) return;
+                window.addEventListener('scroll', function() {
+                    const current = window.scrollY;
+                    // Прячем при прокрутке вниз, показываем при прокрутке вверх
+                    if (current > lastScroll && current > 100) {
+                        header.style.transform = 'translateY(-100%)';
+                    } else {
+                        header.style.transform = 'translateY(0)';
+                    }
+                    lastScroll = current;
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // ИЗМЕНЕНИЕ TITLE
+            // ============================================================
+            function initTitleChange() {
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        document.title = '⭐ Возвращайтесь в XolaStars';
+                    } else {
+                        document.title = 'XolaStars ✦ Telegram Stars Marketplace';
+                    }
+                });
+            }
+
+            // ============================================================
+            // СТАТУС СЕТИ
+            // ============================================================
+            function initNetworkStatus() {
+                function check() {
+                    if (navigator.onLine) {
+                        showToast('✅ Соединение восстановлено');
+                    } else {
+                        showToast('⚠️ Нет подключения');
+                    }
+                }
+                window.addEventListener('online', check);
+                window.addEventListener('offline', check);
+            }
+
+            // ============================================================
+            // ПРИВЕТСТВИЕ
+            // ============================================================
+            function initGreeting() {
+                const hour = new Date().getHours();
+                let text = '';
+                if (hour < 12) text = '🌅 Доброе утро!';
+                else if (hour < 18) text = '⭐ Добрый день!';
+                else text = '🌙 Добрый вечер!';
+                setTimeout(() => showToast(text), 700);
+            }
+
+            // ============================================================
+            // ВОССТАНОВЛЕНИЕ ПОСЛЕДНЕЙ СЕКЦИИ
+            // ============================================================
+            function restoreLastSection() {
+                const id = state.lastSection;
+                if (id) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        setTimeout(() => {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                        }, 500);
+                    }
+                }
+            }
+
+            // ============================================================
+            // СОХРАНЕНИЕ ПОСЛЕДНЕЙ СЕКЦИИ
+            // ============================================================
+            function initSaveSection() {
+                window.addEventListener('scroll', function() {
+                    let section = '';
+                    $$('section[id]').forEach(item => {
+                        if (window.scrollY >= item.offsetTop - 200) {
+                            section = item.id;
+                        }
+                    });
+                    if (section) {
+                        state.lastSection = section;
+                        storage.save('lastSection', section);
+                    }
+                }, { passive: true });
+            }
+
+            // ============================================================
+            // СЕКРЕТНАЯ ТЕМА
+            // ============================================================
+            function initSecretTheme() {
+                let clicks = 0;
+                const logo = dom.logo;
+                if (!logo) return;
+                logo.addEventListener('click', function() {
+                    clicks++;
+                    if (clicks === 7) {
+                        showToast('🎉 Секретная тема активирована!');
+                        document.body.classList.toggle('secret-theme');
+                        clicks = 0;
+                    }
+                });
+            }
+
+            // ============================================================
+            // ПЛАВНЫЙ СКРОЛЛ ДЛЯ ЯКОРНЫХ ССЫЛОК
+            // ============================================================
+            function initSmoothAnchors() {
+                $$('a[href^="#"]').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const id = this.getAttribute('href');
+                        const target = document.querySelector(id);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+            }
+
+            // ============================================================
+            // ПОЛИТИКА
+            // ============================================================
+            function initPrivacy() {
+                if (dom.privacyLink) {
+                    dom.privacyLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (dom.privacyModal) dom.privacyModal.classList.add('active');
+                    });
+                }
+                if (dom.closePrivacyModal) {
+                    dom.closePrivacyModal.addEventListener('click', function() {
+                        if (dom.privacyModal) dom.privacyModal.classList.remove('active');
+                    });
+                }
+                if (dom.privacyModal) {
+                    dom.privacyModal.addEventListener('click', function(e) {
+                        if (e.target === this) this.classList.remove('active');
+                    });
+                }
+            }
+
+            // ============================================================
+            // КНОПКИ В ПАКЕТАХ
+            // ============================================================
+            function initPackageButtons() {
+                $$('.package-buy').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const stars = parseInt(this.dataset.stars);
+                        if (!isNaN(stars)) {
+                            if (dom.stars) dom.stars.value = stars;
+                            if (dom.starsInput) dom.starsInput.value = stars;
+                            updatePrice();
+                            const buyCard = $('.buy-card');
+                            if (buyCard) buyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
+                });
+            }
+
+            // ============================================================
+            // ОБРАБОТЧИКИ СОБЫТИЙ
+            // ============================================================
+            function initEventListeners() {
+                // Тема
+                if (dom.themeBtn) dom.themeBtn.addEventListener('click', cycleTheme);
+                if (dom.themeSelect) {
+                    dom.themeSelect.addEventListener('change', function() {
+                        state.theme = this.value;
+                        applyTheme();
+                        showToast('Тема изменена');
+                    });
+                }
+
+                // Настройки
+                if (dom.settingsBtn) {
+                    dom.settingsBtn.addEventListener('click', function() {
+                        dom.settingsPanel.classList.toggle('active');
+                    });
+                }
+
+                // Размер шрифта
+                if (dom.fontSize) {
+                    dom.fontSize.addEventListener('input', function() {
+                        state.fontSize = Number(this.value);
+                        document.documentElement.style.fontSize = state.fontSize + 'px';
+                        storage.save('font', state.fontSize);
+                    });
+                }
+
+                // Анимации
+                if (dom.animationsChk) {
+                    dom.animationsChk.addEventListener('change', function() {
+                        state.animations = this.checked;
+                        dom.body.classList.toggle('reduce-motion', !state.animations);
+                        storage.save('animations', state.animations);
+                    });
+                }
+
+                // Кнопки открытия модалки заказа
+                const openBtns = [dom.buyBtn, dom.heroBuyBtn, dom.buyNowBtn];
+                openBtns.forEach(btn => {
+                    if (btn) btn.addEventListener('click', openOrderModal);
+                });
+
+                // Модалка заказа
+                if (dom.closeOrderModal) dom.closeOrderModal.addEventListener('click', closeOrderModal);
+                if (dom.orderModal) {
+                    dom.orderModal.addEventListener('click', function(e) {
+                        if (e.target === this) closeOrderModal();
+                    });
+                }
+
+                // Подтверждение оплаты
+                if (dom.confirmPayment) dom.confirmPayment.addEventListener('click', confirmPayment);
+
+                // Модалка отзыва
+                if (dom.closeReviewModal) dom.closeReviewModal.addEventListener('click', closeReviewModal);
+                if (dom.reviewModal) {
+                    dom.reviewModal.addEventListener('click', function(e) {
+                        if (e.target === this) closeReviewModal();
+                    });
+                }
+                if (dom.submitReview) dom.submitReview.addEventListener('click', submitReview);
+
+                // Username
+                if (dom.username) {
+                    dom.username.addEventListener('input', function() {
+                        state.lastUsername = this.value;
+                        storage.save('lastUsername', this.value);
+                    });
+                    dom.username.addEventListener('dblclick', function() {
+                        if (this.value) {
+                            navigator.clipboard.writeText(this.value);
+                            showToast('Username скопирован');
+                        }
+                    });
+                }
+
+                // Закрытие настроек по клику вне
+                document.addEventListener('click', function(e) {
+                    const panel = dom.settingsPanel;
+                    const btn = dom.settingsBtn;
+                    if (panel && panel.classList.contains('active') && btn) {
+                        if (!panel.contains(e.target) && !btn.contains(e.target)) {
+                            panel.classList.remove('active');
+                        }
+                    }
+                });
+            }
+
+            // ============================================================
+            // ИНИЦИАЛИЗАЦИЯ
+            // ============================================================
+            function init() {
+                loadState();
+                applySettings();
+                updatePrice();
+                updateProfileDisplay();
+                renderReviews();
+
+                initCanvas();
+                initCursor();
+                initCounters();
+                initTimer();
+                initReveal();
+                initTopButton();
+                initSearch();
+                initDailyReward();
+                initKeyboard();
+                initNavHighlight();
+                initParallax();
+                initRipple();
+                initSupport();
+                initCompact();
+                initLanguage();
+                initProgress();
+                initDraft();
+                initHeaderHide();
+                initTitleChange();
+                initNetworkStatus();
+                initGreeting();
+                restoreLastSection();
+                initSaveSection();
+                initSecretTheme();
+                initSmoothAnchors();
+                initFaq();
+                initPrivacy();
+                initPackageButtons();
+                initReviewStars();
+                initEventListeners();
+
+                saveState();
+
+                console.group('XolaStars');
+                console.log('Версия 2.0 (финальная с отзывами)');
+                console.log('Платформа:', navigator.platform);
+                console.log('Язык:', navigator.language);
+                console.groupEnd();
+
+                setTimeout(() => showToast('🚀 Добро пожаловать в XolaStars!'), 800);
+                updateProfileDisplay();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+</body>
+</html>
